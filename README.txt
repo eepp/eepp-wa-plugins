@@ -1,7 +1,7 @@
 eepp's Winamp HTTP POST v1.0
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 Author: Philippe Proulx <eeppeliteloop@gmail.com>
-Website: <http://http://code.google.com/p/eepp-wa-plugins/>
+Website: <http://code.google.com/p/eepp-wa-plugins/>
 
 
 1 INTRODUCTION
