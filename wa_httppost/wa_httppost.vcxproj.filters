@@ -24,9 +24,4 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="wa_httppost.def">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>

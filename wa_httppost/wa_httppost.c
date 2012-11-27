@@ -32,6 +32,9 @@ MA 02110-1301  USA
 /* last Winamp window procedure */
 static WNDPROC g_old_winamp_wnd_proc = NULL;
 
+/* config path */
+static WCHAR g_config_path [MAX_PATH];
+
 /* Winamp plugin structure */
 static struct winamp_gpp g_plugin = {
 	WAP_GPPHDR_VER,
@@ -205,7 +208,20 @@ static BOOL get_ini_str(FILE* fh, const char* key, char* val) {
 static BOOL load_config(void) {
 	BOOL ret;
 	FILE* fh;
+	HMODULE h_module;
+	WCHAR* pos;
+	WCHAR path[MAX_PATH];
 
+	/* get Winamp's path */
+	h_module = GetModuleHandleW(NULL);
+	GetModuleFileNameW(h_module, g_config_path, MAX_PATH);
+	
+	/* cat the INI config filename */
+	pos = wcsrchr(g_config_path, '\\');
+	pos[1] = '\0';
+	wcscat(g_config_path, WAP_INI_FILENAME_W);
+
+	/* open and parse config */
 	fopen_s(&fh, WAP_INI_FILENAME, "rb");
 	if (!fh) {
 		MessageBox(NULL,
@@ -257,15 +273,15 @@ void config(void) {
 	MessageBox(NULL,
 		L"opening configuration file...\nWinamp needs to be restarted after editing this file",
 		L"info", MB_OK);
-	ShellExecute(g_plugin.hwnd_parent, L"open", WAP_INI_FILENAME_W, NULL, NULL, SW_SHOW);
+	ShellExecute(g_plugin.hwnd_parent, L"open", g_config_path, NULL, NULL, SW_SHOW);
 }
- 
+
 void fini() {
 	if (g_plugin_state.config_loaded) {
 		curl_global_cleanup();
 	}
 }
 
-struct winamp_gpp* winampGetGeneralPurposePlugin() {
+__declspec(dllexport) struct winamp_gpp* winampGetGeneralPurposePlugin() {
 	return &g_plugin;
 }
