@@ -222,7 +222,8 @@ static BOOL load_config(void) {
 	wcscat(g_config_path, WAP_INI_FILENAME_W);
 
 	/* open and parse config */
-	fopen_s(&fh, WAP_INI_FILENAME, "rb");
+
+	_wfopen_s(&fh, g_config_path, L"rb");
 	if (!fh) {
 		MessageBox(NULL,
 			L"eepp's Winamp HTTP POST: cannot open configuration file...",
